@@ -1,0 +1,36 @@
+//
+//
+//Copyright 2016 Viewpoint, Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+//
+
+
+h1 Login
+
+p Use the same username and password as your company login (Active Directory, login to your computer, etc.).
+
+form(ng-submit="login()")
+    div.form-group
+        label Username (do not include "DOMAIN\" or "@domain.com")
+        input.form-control(type='text', ng-model='username')
+    div.form-group
+        label Password
+        input.form-control(type='password', ng-model='password')
+    div.form-group
+        label Domain
+        p
+            select(ng-model='selectedDomain', ng-options='domain for domain in domains')
+    h2(ng-if='errorMessage') {{errorMessage}}
+    input.btn.btn-lg(ng-if='!pleaseWait', type='submit', value='Login')
+    img(ng-if='pleaseWait', src='/images/pleaseWait.gif')

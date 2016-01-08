@@ -1,0 +1,8 @@
+.idea
+bower_components
+node_modules
+<<<<<<< HEAD
+.DS_store
+=======
+.DS_Store
+>>>>>>> dev

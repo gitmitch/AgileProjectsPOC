@@ -1,0 +1,70 @@
+//
+//
+//Copyright 2016 Viewpoint, Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+//
+
+
+extends layout
+
+block extraheader
+
+  script.
+    var kanbanModel = !{JSON.stringify(kanbanModel)}
+    var configFromServer = !{JSON.stringify(configFromServer)}
+
+  link(href='/bower_components/c3/c3.css', rel='stylesheet', type='text/css')
+  link(href='/bower_components/angular-bootstrap/ui-bootstrap-csp.css', rel='stylesheet', type='text/css')
+  link(href='/bower_components/angular-ui-grid/ui-grid.css', rel='stylesheet', type='text/css')
+  link(href='/stylesheets/charts.css', rel='stylesheet', type='text/css')
+
+  script(src='/bower_components/angular/angular.js')
+  script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='/bower_components/angular-route/angular-route.js')
+  script(src='/bower_components/angular-animate/angular-animate.min.js')
+  script(src='/bower_components/angular-ui-grid/ui-grid.min.js')
+  script(src='/bower_components/angular-sanitize/angular-sanitize.min.js')
+  script(src='/bower_components/angular-resource/angular-resource.min.js')
+  script(src='/bower_components/checklist-model/checklist-model.js')
+  script(src='/bower_components/ng-csv/build/ng-csv.min.js')
+  script(src='/js/FileSaver.js')
+  script(src='/bower_components/d3/d3.min.js')
+  script(src='/bower_components/c3/c3.js')
+  script(src='/js/angular_c3_simple.js')
+  script(src='/ng/app.js')
+  script(src='/ng/kanban.ctrl.js')
+  script(src='/ng/users.ctrl.js')
+  script(src='/ng/configure.ctrl.js')
+  script(src='/ng/kanbanReportEdit.ctrl.js')
+  script(src='/ng/kanbanReportPicker.ctrl.js')
+
+block content
+  div(ng-app='kanbanApp', ng-controller='AppCtrl')
+    nav.navbar.navbar-default
+      div.container
+        ul.nav.navbar-nav
+          li
+            a(href='#/') KANBAN
+          li(ng-if='user.isAdmin')
+            a(href='#/users') USERS
+          li(ng-if='user.isManager')
+            a(href='#/configure') CONFIG
+        p.navbar-text.navbar-right
+          span(ng-if='isLoggedIn') {{user.username}}
+          span(ng-if='!isLoggedIn')
+            a(href='#/users/login') Login
+
+    div.container(ng-view)
+
+

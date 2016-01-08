@@ -1,0 +1,60 @@
+//
+//
+//Copyright 2016 Viewpoint, Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+//
+
+
+div.modal-header
+    h3.modal-title Create/Edit Class Of Service
+
+div.modal-body
+    div.form-group
+        label Name
+        input.form-control(type='text', ng-model='classOfService.name')
+    div.form-group
+        label WIQL for Closed Items
+        textarea.form-control(rows='5', ng-model='classOfService.queryForClosed')
+    div.form-group
+        label WIQL for All Items
+        textarea.form-control(rows='5', ng-model='classOfService.queryForAll')
+    div.form-group
+        label Board ID
+        input.form-control(type='text', ng-model='classOfService.board')
+    div.form-group
+        label Board URL
+        input.form-control(type='text', ng-model='classOfService.boardURL')
+    div.form-group
+        label Update TFS with Cycle Time?
+        input.form-control(type='checkbox', ng-model='classOfService.decorateTFS')
+    div.form-group
+        label Field to Update in TFS
+        input.form-control(type='text', ng-model='classOfService.decoratorConfig.fieldToUpdate')
+    div.form-group
+        label Columns to Include in the Cycle Time Calculation
+        p.alert.alert-info(ng-if='possibleColumns.length == 0') Save this class of service with the proper board URL to see a list of available columns.
+        p(ng-if='possibleColumns.length > 0')
+            button(ng-click='selectAllColumns()') All
+            | &nbsp;
+            button(ng-click='selectNoColumns()') None
+        p(ng-repeat='possibleColumn in possibleColumns')
+            input(type='checkbox', checklist-model='classOfService.decoratorConfig.columnsToInclude', checklist-value='possibleColumn')
+            | &nbsp; {{possibleColumn}}
+
+    p.alert.alert-danger(ng-if='errorMessage') {{errorMessage}}
+
+div.modal-footer
+    button.btn.btn-lg.btn-danger(ng-click='delete()') Delete
+    button.btn.btn-lg.btn-success(ng-click='save()') Save
+    button.btn.btn-lg(ng-click='cancel()') Cancel

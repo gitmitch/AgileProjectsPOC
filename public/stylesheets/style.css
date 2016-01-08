@@ -1,0 +1,119 @@
+body {
+  /*padding: 10px;*/
+  font-family: 'Open Sans', "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+h1, h2, h3, h4, h5, button {
+  font-family: "Oswald","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+button {
+  text-transform: uppercase;
+  margin: 0.25em;
+}
+
+h1 {
+  font-size: 2em;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+.reportTitle {
+  font-size: 1.5em;
+  font-family: "Oswald","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #9CCB3B;
+}
+
+.reportName {
+  font-weight: bold;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.kanbanParams td, .kanbanReport td {
+  padding: 0.25em;
+}
+
+.kanbanParams thead, .kanbanReport thead {
+  font-weight: bold;
+}
+
+div.columnList {
+  float: left;
+}
+
+p.loadReport {
+  font-size: 18px;
+  font-family: "Oswald","Helvetica Neue",Helvetica,Arial,sans-serif;
+  padding-top: 0.25em;
+  text-transform: uppercase;
+}
+
+div.reportRow {
+  padding-top: 1em;
+}
+
+div.reportLeft {
+
+}
+
+div.reportMiddle {
+  /*text-align: center;*/
+}
+
+div.reportRight {
+  text-align: right;
+}
+
+@media only screen and (max-width: 991px) {
+  div.reportRight {
+    text-align: left;
+  }
+
+}
+
+
+.tab-animation > .tab-content {
+  /*position: relative;*/
+}
+
+.tab-animation > .tab-content > .tab-pane{
+  transition: 0.2s linear opacity;
+}
+
+/*.tab-animation > .tab-content > .tab-pane.active-remove {*/
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*width: 100%;*/
+  /*display: block;*/
+/*}*/
+
+.tab-animation > .tab-content > .tab-pane.active-remove-active {
+  opacity: 0;
+}
+
+.tab-animation > .tab-content > .tab-pane.active-add {
+  opacity: 0;
+}
+
+.grid {
+  width: 500px;
+  height: 250px;
+}
+
+.rerun {
+  margin-top: 20px;
+}
+
+[ng-click] {
+  cursor: pointer;
+}

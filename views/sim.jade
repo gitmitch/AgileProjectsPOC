@@ -1,0 +1,211 @@
+//
+//
+//Copyright 2016 Viewpoint, Inc.
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+//
+
+
+extends layout
+
+block extraheader
+
+  link(href='/bower_components/c3/c3.css', rel='stylesheet', type='text/css')
+  link(href='/bower_components/angular-bootstrap/ui-bootstrap-csp.css', rel='stylesheet', type='text/css')
+  link(href='/bower_components/angular-ui-grid/ui-grid.css', rel='stylesheet', type='text/css')
+  link(href='/stylesheets/charts.css', rel='stylesheet', type='text/css')
+  link(href='/bower_components/handsontable/dist/handsontable.full.css', rel='stylesheet', type='text/css')
+
+
+  script(src='/bower_components/angular/angular.js')
+  script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='/bower_components/angular-animate/angular-animate.min.js')
+  script(src='/bower_components/angular-ui-grid/ui-grid.min.js')
+  script(src='/bower_components/angular-sanitize/angular-sanitize.min.js')
+  script(src='/bower_components/ng-csv/build/ng-csv.min.js')
+  script(src='/js/FileSaver.js')
+  script(src='/bower_components/d3/d3.min.js')
+  script(src='/bower_components/c3/c3.js')
+  script(src='/js/angular_c3_simple.js')
+  script(src='/bower_components/handsontable/dist/handsontable.full.js')
+  script(src='/bower_components/ngHandsontable/dist/ngHandsontable.js')
+  script(src='/js/jstat.min.js')
+
+
+  script(src='/js/simctrl.js')
+  script(src='/js/whenReady.js')
+
+block content
+  div.container(ng-app='simApp', ng-controller='simController')
+
+
+
+    uib-tabset.tab-animation
+
+
+      uib-tab(heading='Inputs', active='tabs[0].active')
+
+        div.row.reportRow
+          div.col-md-4.reportLeft
+            p
+              button.btn.btn-lg(ng-click='saveInputs()') Save Inputs
+          div.col-md-4.reportMiddle
+            p.loadReport Load Inputs
+            p
+              input(type='file', on-read-file='loadInputs($fileContent)')
+          div.col-md-4.reportRight
+            p
+              button.btn.btn-lg(ng-click='runSim(true); tabs[1].active = true;') Run Simulator
+
+
+        h1 Simulator Inputs
+        table.kanbanParams
+          tr
+            td Number of iterations per simulation:
+            td
+              input(type='text', ng-model='inputs.iterations')
+          tr
+            td Maximum number of sprints:
+            td
+              input(type='text', ng-model='inputs.maxSprints')
+
+        h2 Story Counts per Feature
+        hot-table(hot-id='featuresTable',
+        settings='inputs.featuresTableSettings',
+        row-headers='false',
+        col-headers='true',
+        min-spare-rows='1',
+        datarows='inputs.featuresTableData',
+        when-ready='addRow("featuresTable")',
+        wait-for-interpolation='true')
+          hot-column(data='ahaId', title='"Aha ID"', width='100')
+          hot-column(data='title', title='"Title"', width='200')
+          hot-column(data='min', title='"Min"', width='50')
+          hot-column(data='mostLikely', title='"Most Likely"', width='100')
+          hot-column(data='max', title='"Max"', width='50')
+
+
+
+
+        h2 Throughput per Sprint
+        hot-table(hot-id='throughputTable',
+        settings='inputs.throughputTableSettings',
+        row-headers='false',
+        col-headers='true',
+        min-spare-rows='1',
+        datarows='inputs.throughputTableData',
+        when-ready='addRow("throughputTable")',
+        wait-for-interpolation='true')
+          hot-column(data='description', title='"Description"', width='200')
+          hot-column(data='min', title='"Min"', width='50')
+          hot-column(data='mostLikely', title='"Most Likely"', width='100')
+          hot-column(data='max', title='"Max"', width='50')
+
+        h2 Throughput Risks
+        hot-table(hot-id='throughputRisksTable',
+        settings='inputs.throughputRisksTableSettings',
+        row-headers='false',
+        col-headers='true',
+        min-spare-rows='1',
+        datarows='inputs.throughputRisksTableData',
+        when-ready='addRow("throughputRisksTable")',
+        wait-for-interpolation='true')
+          hot-column(data='description', title='"Description"', width='200')
+          hot-column(data='prob', title='"Probability (0-1)"', width='150')
+          hot-column(data='impact', title='"Impact"', width='50')
+
+        h2 Scope Changes per Sprint
+        hot-table(hot-id='scopeTable',
+        settings='inputs.scopeTableSettings',
+        row-headers='false',
+        col-headers='true',
+        min-spare-rows='1',
+        datarows='inputs.scopeTableData',
+        when-ready='addRow("scopeTable")',
+        wait-for-interpolation='true')
+          hot-column(data='description', title='"Description"', width='200')
+          hot-column(data='min', title='"Min"', width='50')
+          hot-column(data='mostLikely', title='"Most Likely"', width='100')
+          hot-column(data='max', title='"Max"', width='50')
+
+        h2 Scope Risks
+        hot-table(hot-id='scopeRisksTable',
+        settings='inputs.scopeRisksTableSettings',
+        row-headers='false',
+        col-headers='true',
+        min-spare-rows='1',
+        datarows='inputs.scopeRisksTableData',
+        when-ready='addRow("scopeRisksTable")',
+        wait-for-interpolation='true')
+          hot-column(data='description', title='"Description"', width='200')
+          hot-column(data='prob', title='"Probability (0-1)"', width='150')
+          hot-column(data='impact', title='"Impact"', width='50')
+
+      uib-tab(heading='Results', disable='!enableReport', active='tabs[1].active')
+        p
+          button.btn.btn-lg.rerun(ng-click='runSim();') Re-Run Simulator
+        h1 {{report.successfulIterationsCount}} Successful Iterations
+        p {{report.successPercentage}} probability of completing the project within {{report.maxDuration}} sprints
+        h1 Project Duration
+        c3-simple(ng-if='enableReport', id="durationHisto", config='report.durationHistoConfig', chartId="durationHisto")
+        c3-simple(ng-if='enableReport', id="durationProb", config='report.durationProbConfig', chartId="durationProb")
+
+      uib-tab(heading='Features', disable='!enableReport', active='tabs[2].active')
+        p
+          button.btn.btn-lg.rerun(ng-click='runSim();') Re-Run Simulator
+        div(ng-repeat='feature in report.features')
+          h2 {{feature.inputs.ahaId}}: {{feature.inputs.title}}
+          ul
+            li Minimum story count: {{feature.inputs.min}}
+            li Most likely story count: {{feature.inputs.mostLikely}}
+            li Maximum story count: {{feature.inputs.max}}
+          h3 Feature Size
+          c3-simple(ng-if='enableReport', id="{{'featureHisto_' + $index}}", config='feature.histoConfig', chartId="{{'featureHisto_' + $index}}")
+          c3-simple(ng-if='enableReport', id="{{'featureProb_' + $index}}", config='feature.probConfig', chartId="{{'featureProb_' + $index}}")
+          h3 Sprint in which it was Completed
+          c3-simple(ng-if='enableReport', id="{{'featureSprintHisto_' + $index}}", config='feature.sprintHistoConfig', chartId="{{'featureSprintHisto_' + $index}}")
+          c3-simple(ng-if='enableReport', id="{{'featureSprintProb_' + $index}}", config='feature.sprintProbConfig', chartId="{{'featureSprintProb_' + $index}}")
+
+      uib-tab(heading='Scope Risks', disable='!enableReport', active='tabs[3].active')
+        p
+          button.btn.btn-lg.rerun(ng-click='runSim();') Re-Run Simulator
+        p(ng-if='!report.showScopeRisks') No Given Risks to Scope
+        c3-simple(ng-if='enableReport && report.showScopeRisks', id="scopeRisksHisto", config='report.scopeRisksHistoConfig', chartId="scopeRisksHisto")
+        c3-simple(ng-if='enableReport && report.showScopeRisks', id="scopeRisksProb", config='report.scopeRisksProbConfig', chartId="scopeRisksProb")
+
+      uib-tab(heading='Scope', disable='!enableReport', active='tabs[4].active')
+        p
+          button.btn.btn-lg.rerun(ng-click='runSim();') Re-Run Simulator
+        h1 Scope of All Features + Risks
+        c3-simple(ng-if='enableReport', id="initialScopeHisto", config='report.initialScopeHistoConfig', chartId="initialScopeHisto")
+        c3-simple(ng-if='enableReport', id="initialScopeProb", config='report.initialScopeProbConfig', chartId="initialScopeProb")
+        h1 Final Project Scope with Scope Changes
+        c3-simple(ng-if='enableReport', id="totalScopeHisto", config='report.totalScopeHistoConfig', chartId="totalScopeHisto")
+        c3-simple(ng-if='enableReport', id="totalScopeProb", config='report.totalScopeProbConfig', chartId="totalScopeProb")
+        h1 Scope Changes
+        c3-simple(ng-if='enableReport', id="scopeChangeHisto", config='report.scopeChangeHistoConfig', chartId="scopeChangeHisto")
+        c3-simple(ng-if='enableReport', id="scopeChangeProb", config='report.scopeChangeProbConfig', chartId="scopeChangeProb")
+
+      uib-tab(heading='Throughput', disable='!enableReport', active='tabs[5].active')
+        p
+          button.btn.btn-lg.rerun(ng-click='runSim();') Re-Run Simulator
+        c3-simple(ng-if='enableReport', id="throughputHisto", config='report.throughputHistoConfig', chartId="throughputHisto")
+        c3-simple(ng-if='enableReport', id="throughputProb", config='report.throughputProbConfig', chartId="throughputProb")
+
+      uib-tab(heading='Sprints', disable='!enableReport', active='tabs[6].active')
+        p
+          button.btn.btn-lg.rerun(ng-click='runSim();') Re-Run Simulator
+        div(ng-repeat='sprint in report.sprintWork')
+          h2 Sprint {{sprint.sprintNum}}
+          c3-simple(ng-if='enableReport', id="{{'sprintWorkHisto_' + $index}}", config='sprint.sprintHistoConfig', chartId="{{'sprintWorkHisto_' + $index}}")
+          c3-simple(ng-if='enableReport', id="{{'sprintWorkProb_' + $index}}", config='sprint.sprintProbConfig', chartId="{{'sprintWorkProb_' + $index}}")

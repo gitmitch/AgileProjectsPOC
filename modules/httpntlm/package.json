@@ -1,0 +1,58 @@
+{
+  "name": "httpntlm",
+  "description": "httpntlm is a Node.js library to do HTTP NTLM authentication - TODO: httpreq has been modified to support PATCH",
+  "version": "1.5.2",
+  "dependencies": {
+    "agentkeepalive": ">=1.2.0",
+    "async": "~0.2.9",
+    "httpreq": ">=0.4.5",
+    "underscore": "~1.7.0"
+  },
+  "author": {
+    "name": "Sam Decrock",
+    "url": "https://github.com/SamDecrock/"
+  },
+  "bugs": {
+    "url": "https://github.com/SamDecrock/node-http-ntlm/issues"
+  },
+  "engines": {
+    "node": ">=0.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SamDecrock/node-http-ntlm.git"
+  },
+  "main": "./httpntlm",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "scripts": {
+    "jshint": "jshint *.js"
+  },
+  "gitHead": "c229d602d386fff137598ff8d477c15f03ac7dc3",
+  "homepage": "https://github.com/SamDecrock/node-http-ntlm",
+  "_id": "httpntlm@1.5.2",
+  "_shasum": "b298045210127a5370e3585d708b6608fd4a652d",
+  "_from": "httpntlm@*",
+  "_npmVersion": "2.6.0",
+  "_nodeVersion": "0.12.0",
+  "_npmUser": {
+    "name": "samdecrock",
+    "email": "sam.decrock@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "samdecrock",
+      "email": "sam.decrock@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "b298045210127a5370e3585d708b6608fd4a652d",
+    "tarball": "http://registry.npmjs.org/httpntlm/-/httpntlm-1.5.2.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/httpntlm/-/httpntlm-1.5.2.tgz"
+}
