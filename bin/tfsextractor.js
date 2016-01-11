@@ -24,6 +24,7 @@ var fs = require('fs');
 var webclient = require('../modules/webclient');
 var async = require('async');
 var projectormodel = require('../modules/projectormodel');
+var kanbanModel = require('../db/kanbanModel');
 var tfsdecorator = require('../modules/tfsdecorator');
 var _ = require('underscore');
 var http = require('http');
@@ -339,7 +340,16 @@ function addColumnsToClasses(model, callbackWhenDone) {
 
 
 function persist(model, callbackWhenDone) {
-    fs.writeFile(config.modelStorageFile, JSON.stringify(model), callbackWhenDone);
+
+    async.parallel([
+        function(cbWhenFileSaved) {
+            fs.writeFile(config.modelStorageFile, JSON.stringify(model), cbWhenFileSaved);
+        },
+        function(cbWhenDatabaseUpdated) {
+            kanbanModel.replace(model, cbWhenDatabaseUpdated);
+        }
+    ], callbackWhenDone);
+
 }
 
 function load() {
