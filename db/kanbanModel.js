@@ -29,7 +29,7 @@ var model = db.model('kanbanModel', kanbanModelSchema);
 var replace = function(newPayload, callback) {
 
     model.findOne(function(err, currentModel) {
-        if(err) callback(err);
+        if(err) return callback(err);
 
         var modelToUpdate = currentModel;
 
