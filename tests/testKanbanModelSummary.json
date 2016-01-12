@@ -1,0 +1,41 @@
+{
+  "classesOfService": [
+    {
+      "name": "FieldView Portland (iOS)",
+      "queryForClosed": "SELECT [System.Id] FROM WorkItems WHERE [System.AreaPath] = 'FieldView\\iOS'  AND  [System.WorkItemType] IN ('User Story', 'Bug')  AND  [System.State] = 'Closed' and [Microsoft.VSTS.Common.ClosedDate] > @today - 183",
+      "queryForAll": "SELECT [System.Id] FROM WorkItems WHERE [System.AreaPath] = 'FieldView\\iOS'  AND  [System.WorkItemType] IN ('User Story', 'Bug')",
+      "board": "C794802A6D694782BF31AB7238CACBAB",
+      "columnNames": [
+        "Active",
+        "Closed",
+        "Committed",
+        "In Development",
+        "KanbanSetup1",
+        "New",
+        "Ready",
+        "Ready for Demo",
+        "Ready for Testing",
+        "Resolved"
+      ],
+      "minDate": "2015-10-12T14:37:14.53Z",
+      "maxDate": "2016-01-11T21:55:27.39Z"
+    }
+  ],
+  "allBoards": [
+    "C794802A6D694782BF31AB7238CACBAB"
+  ],
+  "columnsForBoard": {
+    "C794802A6D694782BF31AB7238CACBAB": [
+      "Active",
+      "Closed",
+      "Committed",
+      "In Development",
+      "KanbanSetup1",
+      "New",
+      "Ready",
+      "Ready for Demo",
+      "Ready for Testing",
+      "Resolved"
+    ]
+  }
+}

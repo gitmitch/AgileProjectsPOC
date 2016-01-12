@@ -18,6 +18,8 @@
 
 
 var db = require('./index.js');
+var shared = require('./shared.js');
+var _ = require('underscore');
 
 var kanbanModelSchema = db.Schema({
     updated: {type: Date, default: Date.now},
@@ -27,23 +29,30 @@ var kanbanModelSchema = db.Schema({
 var model = db.model('kanbanModel', kanbanModelSchema);
 
 var replace = function(newPayload, callback) {
+    shared.replace(model, newPayload, callback);
+}
 
-    model.findOne(function(err, currentModel) {
-        if(err) return callback(err);
-
-        var modelToUpdate = currentModel;
-
-        if(currentModel == null)
-            modelToUpdate = new model();
-
-        modelToUpdate.payload = newPayload;
-        modelToUpdate.markModified('payload');
-        modelToUpdate.save(callback);
-    })
+var generateKanbanModelSummary = function(payload) {
+    return {
+        classesOfService: _(payload.classesOfService).map(function(classOfService) {
+            return {
+                name: classOfService.name,
+                queryForClosed: classOfService.queryForClosed,
+                queryForAll: classOfService.queryForAll,
+                board: classOfService.board,
+                columnNames: classOfService.columnNames,
+                minDate: classOfService.minDate,
+                maxDate: classOfService.maxDate
+            };
+        }),
+        allBoards: payload.allBoards,
+        columnsForBoard: payload.columnsForBoard
+    };
 
 }
 
 module.exports = {
     model: model,
-    replace: replace
+    replace: replace,
+    generateKanbanModelSummary: generateKanbanModelSummary
 }

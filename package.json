@@ -22,5 +22,11 @@
     "install-windows-service": "winser -i",
     "uninstall-windows-service": "winser -r",
     "start": "node ./bin/www 3000 ../www.config.json"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^2.2.0",
+    "mocha": "^2.3.4"
   }
 }
