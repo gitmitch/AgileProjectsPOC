@@ -16,21 +16,38 @@
 
  */
 
+var async = require('async');
 
+
+// ensures there is ever only one record in the database for this model
 var replace = function(model, newPayload, callback) {
 
-    model.findOne(function(err, currentModel) {
-        if(err) return callback(err);
+    async.waterfall([
+        function(stepDone) {
+            model.count({}, stepDone);
+        },
+        function(count, stepDone) {
+            if(count>1)
+                return model.remove({}, stepDone);
+            process.nextTick(stepDone.bind(null, null, 0));
+        },
+        function(removed, stepDone) {
+            model.findOne(stepDone);
+        },
+        function(currentModel, stepDone) {
+            var modelToUpdate = currentModel;
 
-        var modelToUpdate = currentModel;
+            if(currentModel == null)
+                modelToUpdate = new model();
 
-        if(currentModel == null)
-            modelToUpdate = new model();
+            modelToUpdate.payload = newPayload;
+            modelToUpdate.markModified('payload');
+            modelToUpdate.save(callback);
+            process.nextTick(stepDone);
+        }
+    ]);
 
-        modelToUpdate.payload = newPayload;
-        modelToUpdate.markModified('payload');
-        modelToUpdate.save(callback);
-    })
+
 
 }
 
