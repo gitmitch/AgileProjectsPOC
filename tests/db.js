@@ -108,5 +108,4 @@ describe('shared database-related functions', function() {
         expect(JSON.stringify(kanbanModel.generateKanbanModelSummary(kanbanModelPayload), null, 4)).to.equal(JSON.stringify(kanbanModelSummaryPayload, null, 4));
     });
 
-    //it('connects to the database')
 })
