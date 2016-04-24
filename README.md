@@ -1,11 +1,12 @@
-KANBAN AND PROJECT PLANNING TOOLS - POC
+Kanban and Project Planning Tools - POC
 =================================
 
-    TODO: Think of a good name for this thing
+WARNING: As often happens with successful proofs-of-concept, this one has been put into production use by several teams who rely on it as their primary tool for measuring their Kanban process. The code here is ugly and unmaintainable, having been hacked together over a few weekends. This tool has been re-written into [agilist.io](http://agilist.io "agilist.io"), a fully maintainable code-base developed with TDD and a quality-first mindset. Teams are transitioning there as features become available. This project will be fully deprecated once agilist.io closes the remaining functionality gaps.
 
-Although this project includes a lot of functionality and is currently in-use on real-world software projects, it is still a proof-of-concept. It's lacking maintainability (e.g. test coverage, automated builds), security, and scalability to be a viable app. The goals of open-sourcing the project are to inspire discussions in the agile project management community and inspire a community of people building more modern tools for this industry.
-
-This code is released under the Apache license, version 2.0. See LICENSE.
+![Work-in-Progress Chart](/../screenshots/screenshots/WIP.png?raw=true)
+![Cycle Time Chart](/../screenshots/screenshots/CycleTime.png?raw=true)
+![Bottlenecks Chart](/../screenshots/screenshots/Bottlenecks.png?raw=true)
+![Throughput Chart](/../screenshots/screenshots/Throughput.png?raw=true)
 
 Purpose
 -------
@@ -15,7 +16,7 @@ This repository contains two tools in a single Node.js project:
 
 Architecture
 ------------
-The back-end is a Node.js web app with Express. There is no database for much of the data used by the system. The project is in transition from storing all data and configuration in JSON files to using a Mongo database for almost everything. Kanban metrics data synchronized with TFS is stored in a JSON file. Configuration is set in JSON files. User data and classes of service configurations are stored in Mongo.
+The back-end is a Node.js web app with Express. There is no database for much of the data used by the system. The project is being deprecated and users are transitioning to agilist.io. Kanban metrics data synchronized with TFS is stored in a JSON file. Configuration is set in JSON files. User data and classes of service configurations are stored in Mongo.
 
 User authentication uses an Active Directory server over LDAP.
 
@@ -24,11 +25,6 @@ Jade is the back-end templating engine. TFS synchronization is accomplished with
 The front-end is Angular.JS and D3 for data visualizations. The C3 wrapper for D3 is used in most cases, rather than D3 directly. The Kanban and project planning tools are separate single-page applications.
 
 All of the software is platform-independent. There is some code to facilitate running as a service on Windows, but Windows is not required.
-
-Known Issues / Limitations
---------------------------
-
-The TFS decorator component only authenticates to TFS with NTLM and will probably only use the HTTP protocol. The TFS extractor will work with either TFS or VSO, using http or https, and basic auth or personal access tokens. TODO: offer multiple authentication options and https support for the TFS decorator, necessary for VSO compatibility (super easy).
 
 Configuration Files
 -------------------
@@ -198,4 +194,4 @@ There's nothing really unusual about the project. Deploy it as a typical MEAN st
 Known Issues
 -----------------
 
-You need to have an initial Kanban model JSON file for all features to work properly on a clean deployment. The only thing that doesn't work is showing available columns in the class of service edit screen. TODO - fix this
+You need to have an initial Kanban model JSON file for all features to work properly on a clean deployment.
