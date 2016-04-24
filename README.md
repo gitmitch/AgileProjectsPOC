@@ -1,11 +1,9 @@
-KANBAN AND PROJECT PLANNING TOOLS - POC
+Kanban and Project Planning Tools - POC
 =================================
 
-    TODO: Think of a good name for this thing
+    WARNING: As proofs-of-concept are apt to do, this one has been put into production use by several teams who rely on it as their primary tool for measuring their Kanban process. The code here is ugly and unmaintainable, having been hacked together over a few weekends. This tool has been re-written into [link](http://agilist.io "agilist.io"), a fully maintainable code-base developed with TDD and a quality-first mindset. Teams are transitioning there as features become available. This project will be fully deprecated once agilist.io closes the remaining functionality gaps.
 
-Although this project includes a lot of functionality and is currently in-use on real-world software projects, it is still a proof-of-concept. It's lacking maintainability (e.g. test coverage, automated builds), security, and scalability to be a viable app. The goals of open-sourcing the project are to inspire discussions in the agile project management community and inspire a community of people building more modern tools for this industry.
-
-This code is released under the Apache license, version 2.0. See LICENSE.
+![Work-in-Progress Chart](/../screenshots/screenshots/WIP.png?raw=true)
 
 Purpose
 -------
