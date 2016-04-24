@@ -4,6 +4,9 @@ Kanban and Project Planning Tools - POC
 WARNING: As proofs-of-concept are apt to do, this one has been put into production use by several teams who rely on it as their primary tool for measuring their Kanban process. The code here is ugly and unmaintainable, having been hacked together over a few weekends. This tool has been re-written into [agilist.io](http://agilist.io "agilist.io"), a fully maintainable code-base developed with TDD and a quality-first mindset. Teams are transitioning there as features become available. This project will be fully deprecated once agilist.io closes the remaining functionality gaps.
 
 ![Work-in-Progress Chart](/../screenshots/screenshots/WIP.png?raw=true)
+![Cycle Time Chart](/../screenshots/screenshots/CycleTime.png?raw=true)
+![Bottlenecks Chart](/../screenshots/screenshots/Bottlenecks.png?raw=true)
+![Throughput Chart](/../screenshots/screenshots/Throughput.png?raw=true)
 
 Purpose
 -------
