@@ -16,7 +16,7 @@ This repository contains two tools in a single Node.js project:
 
 Architecture
 ------------
-The back-end is a Node.js web app with Express. There is no database for much of the data used by the system. The project is in transition from storing all data and configuration in JSON files to using a Mongo database for almost everything. Kanban metrics data synchronized with TFS is stored in a JSON file. Configuration is set in JSON files. User data and classes of service configurations are stored in Mongo.
+The back-end is a Node.js web app with Express. There is no database for much of the data used by the system. The project is being deprecated and users are transitioning to agilist.io. Kanban metrics data synchronized with TFS is stored in a JSON file. Configuration is set in JSON files. User data and classes of service configurations are stored in Mongo.
 
 User authentication uses an Active Directory server over LDAP.
 
@@ -25,11 +25,6 @@ Jade is the back-end templating engine. TFS synchronization is accomplished with
 The front-end is Angular.JS and D3 for data visualizations. The C3 wrapper for D3 is used in most cases, rather than D3 directly. The Kanban and project planning tools are separate single-page applications.
 
 All of the software is platform-independent. There is some code to facilitate running as a service on Windows, but Windows is not required.
-
-Known Issues / Limitations
---------------------------
-
-The TFS decorator component only authenticates to TFS with NTLM and will probably only use the HTTP protocol. The TFS extractor will work with either TFS or VSO, using http or https, and basic auth or personal access tokens. TODO: offer multiple authentication options and https support for the TFS decorator, necessary for VSO compatibility (super easy).
 
 Configuration Files
 -------------------
@@ -199,4 +194,4 @@ There's nothing really unusual about the project. Deploy it as a typical MEAN st
 Known Issues
 -----------------
 
-You need to have an initial Kanban model JSON file for all features to work properly on a clean deployment. The only thing that doesn't work is showing available columns in the class of service edit screen. TODO - fix this
+You need to have an initial Kanban model JSON file for all features to work properly on a clean deployment.
