@@ -65,7 +65,9 @@ var getSavedOptionsCopy = function() {
         credentials: {
             username: getSavedOptions().credentials.username,
             password: getSavedOptions().credentials.password,
-            domain: getSavedOptions().credentials.domain
+            domain: getSavedOptions().credentials.domain,
+            method: getSavedOptions().credentials.method,
+            token: getSavedOptions().credentials.token
         }
     };
     return copy;
