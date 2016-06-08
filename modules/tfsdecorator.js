@@ -20,13 +20,18 @@ var _ = require('underscore');
 var fs = require('fs');
 var http = require('http');
 var httpntlm = require('../modules/httpntlm');
+var webclient = require('./webclient');
 var async = require('async');
+
 
 function main() {
     var args = process.argv.slice(2);
     var config = JSON.parse(fs.readFileSync(args[0], 'utf8'));
     console.log("reading credentials from " + config.credentialsFile);
-    config.credentials = JSON.parse(fs.readFileSync(config.credentialsFile, 'utf8'));
+
+    webclient.loadCredentialsOnce(config.credentialsFile);
+
+    // config.credentials = JSON.parse(fs.readFileSync(config.credentialsFile, 'utf8'));
 
     http.globalAgent.maxSockets = config.maxConcurrentRequests;
 
@@ -45,6 +50,8 @@ function configAndDecorate(configFilename, model) {
 
 function decorateTFS(model, config, callbackWhenDoneDecorating) {
     log("decorating tfs...");
+
+    webclient.loadCredentialsOnce(config.credentialsFile);
 
     // get the classes of service
     //var classesOfService = JSON.parse(fs.readFileSync(config.classesOfServiceFile, 'utf8'));
@@ -115,25 +122,37 @@ function updateTFSField(config, itemId, fieldName, value, callback) {
             }]
     );
 
-    var options = {
-        'url': config.url + "/_apis/wit/workitems/" + itemId + "?bypassRules=true&api-version=1.0",
-        'method': "PATCH",
-        'body': body,
-        'json': true,
-        'headers': {
-            'Content-Type': 'application/json-patch+json',
-            'Accept': 'application/json'
-        },
+    var options = webclient.getSavedOptionsCopy();
+    options.url = config.url + "/_apis/wit/workitems/" + itemId + "?bypassRules=true&api-version=1.0";
+    options.method = 'PATCH';
+    options.body = body;
+    options.json = true;
+    options.headers = {
+                'Content-Type': 'application/json-patch+json',
+                'Accept': 'application/json'
+            };
 
-        'username': config.credentials.username,
-        'password': config.credentials.password,
-        'domain': config.credentials.domain
 
-    }
+    // var options = {
+    //     'url': config.url + "/_apis/wit/workitems/" + itemId + "?bypassRules=true&api-version=1.0",
+    //     'method': "PATCH",
+    //     'body': body,
+    //     'json': true,
+    //     'headers': {
+    //         'Content-Type': 'application/json-patch+json',
+    //         'Accept': 'application/json'
+    //     },
+    //
+    //     'username': config.credentials.username,
+    //     'password': config.credentials.password,
+    //     'domain': config.credentials.domain
+    //
+    // }
 
     //return process.nextTick(callback);
 
-    httpntlm.patch(options, function(error, response) {
+    // httpntlm.patch(options, function(error, response) {
+    webclient.rawRequest(options, function(error, response) {
         if(error || response == null) {
             log("error updating " + itemId + ". error: " + error.message + ", response: " + JSON.stringify(response));
             return callback(error);
